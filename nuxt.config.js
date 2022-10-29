@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'test-app',
+    title: 'traice',
     htmlAttrs: {
       lang: 'en'
     },
@@ -32,9 +32,10 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-  ],
-
+  modules: ['bootstrap-vue/nuxt','@nuxtjs/axios'],
+  axios: {
+    baseURL: process.env.BASE_URL || 'http://localhost:8080',
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
