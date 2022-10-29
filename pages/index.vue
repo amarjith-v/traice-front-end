@@ -7,9 +7,16 @@
         </a>
       </div>
       <div class="row">
-        <div class="col-3 p-2" v-for="(image,  index) in images" :key="image.id">
+        <div class="col-3 p-2" v-for="(image, index) in images" :key="image.id">
           <div class="mt-3" @click="onClick(image.id)">
-            <b-img :src="image.image_url" class="img-fluid"></b-img>
+            <b-img :src="image.image_url" class="image img-fluid">
+            </b-img>
+            <div>
+              {{hover}}
+              <span class="subtitle">
+                {{ image.subtitle }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -24,7 +31,8 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      images: []
+      images: [],
+      hover: false
     }
   },
   mounted() {
@@ -42,17 +50,23 @@ export default {
           }
         })
         .catch((error) => {
-          if(error){
+          if (error) {
             console.error(error.response)
           }
         })
     },
-    async onClick(id){
+    async onClick(id) {
       alert(id)
     }
   }
 }
 </script>
 <style lang="css" scoped>
-
+.subtitle {
+  font-size: 15px;
+  font-family: "Times New Roman", Times, serif;
+}
+.image:hover{
+  box-shadow: 2px 2px #a2a1a1;
+}
 </style>
