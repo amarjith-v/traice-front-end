@@ -12,7 +12,6 @@
             <b-img :src="image.image_url" class="image img-fluid">
             </b-img>
             <div>
-              {{hover}}
               <span class="subtitle">
                 {{ image.subtitle }}
               </span>
@@ -21,18 +20,28 @@
         </div>
       </div>
     </div>
+    <div>
+      <b-modal id="modal-center" centered hide-footer hide-header>
+        <div>
+          <b-img :src="image.image_url" class="image img-fluid">
+          </b-img>
+          <div class="subtitile d-flex flex-column">
+            <strong>{{ image.subtitle }}</strong>
+            <span>{{image.description}}</span>
+          </div>
+        </div>
+      </b-modal>
+    </div>
   </div>
 </template>
 
 <script>
-import { async } from 'q'
-
 export default {
   name: 'IndexPage',
   data() {
     return {
       images: [],
-      hover: false
+      image: ''
     }
   },
   mounted() {
@@ -56,7 +65,18 @@ export default {
         })
     },
     async onClick(id) {
-      alert(id)
+      this.$bvModal.show('modal-center')
+      await this.$axios.post('/api/v1/image/' + id)
+        .then(async (result) => {
+          if (result) {
+            this.image = result.data.data[0]
+          }
+        })
+        .catch((error) => {
+          if (error) {
+            console.error(error.response)
+          }
+        })
     }
   }
 }
@@ -66,7 +86,8 @@ export default {
   font-size: 15px;
   font-family: "Times New Roman", Times, serif;
 }
-.image:hover{
+
+.image:hover {
   box-shadow: 2px 2px #a2a1a1;
 }
 </style>
